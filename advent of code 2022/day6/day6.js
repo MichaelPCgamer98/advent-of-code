@@ -22,7 +22,7 @@ function allDifferent(data) {
   return new Set(data).size === data.length;
 }
 if (allDifferent(window)) console.log(4);
-for (let i = 4; i < line.length; i++) {
+for (let i = 14; i < line.length; i++) { //PT 1 = "i = 4"
   window.shift();
   window.push(line[i]);
   console.log(window);
