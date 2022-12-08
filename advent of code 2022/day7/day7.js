@@ -15,6 +15,7 @@ let totalSize = 0;
 
 let path = "/";
 let stack = [];
+let allPaths = [];
 
 for (let i = 0; i < data.length; i++) {
   let dArr = data[i].split(" ");
@@ -24,33 +25,59 @@ for (let i = 0; i < data.length; i++) {
         i += 2;
       } else if (dArr[2] === "..") {
         stack.pop();
+        allPaths.pop();
       } else {
         stack.push(dArr[2]);
+        allPaths.push("/" + stack.join("/"))
       }
     }
     path = "/" + stack.join("/");
   } else if (dArr[0] === "dir") {
   } else {
     totalSize += parseInt(dArr[0]);
-    // for (let k = 0; k < stack.length; k++) {
-    if (values[path] !== undefined) {
-      values[path] += parseInt(dArr[0]);
-    } else {
-      values[path] = parseInt(dArr[0]);
+    for (let k = 0; k < allPaths.length; k++) {
+      if (values[allPaths[k]] !== undefined) {
+        values[allPaths[k]] += parseInt(dArr[0]);
+      } else {
+        values[allPaths[k]] = parseInt(dArr[0]);
+      }
     }
-    // }
   }
 }
 let ans = 0;
 
-console.log(totalSize);
-console.log(values);
+console.log("total size = " + totalSize);
+// console.log(values);
 
 for (const [key, val] of Object.entries(values)) {
   if (val <= 100000) ans += val;
 }
 if (totalSize <= 100000) ans += totalSize;
 
-console.log(ans);
+// console.log(ans);
 
-//1135465 is too low!
+//1135465 is too low!, 1783610 is correct!
+
+let orderedSizes = [];
+
+for (const [key, val] of Object.entries(values)) {
+  orderedSizes.push(val);
+}
+
+orderedSizes.sort((a, b) => a - b);
+
+for (let i = 0; i < orderedSizes.length; i++) {
+  console.log(orderedSizes[i]);
+}
+
+
+for (let i = 0; i < orderedSizes.length; i++) {
+  if (orderedSizes[i] >= totalSize - 30000000) {
+    // console.log(orderedSizes[i]);
+    break;
+  }
+}
+
+//26391313 is too high!
+//14470980 is too high!
+//11212301 is too high!
