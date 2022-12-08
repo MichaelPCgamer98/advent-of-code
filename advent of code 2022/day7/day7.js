@@ -72,8 +72,8 @@ for (let i = 0; i < orderedSizes.length; i++) {
 
 
 for (let i = 0; i < orderedSizes.length; i++) {
-  if (orderedSizes[i] >= totalSize - 30000000) {
-    // console.log(orderedSizes[i]);
+  if (orderedSizes[i] + (70000000 - totalSize) >= 30000000) {
+    console.log(orderedSizes[i]);
     break;
   }
 }
