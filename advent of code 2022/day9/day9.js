@@ -8,6 +8,8 @@ function syncReadFile(filename) {
 
 let data = syncReadFile("day9/data.txt");
 
+//quick note about the complete route txt file. only the final 'drawing' is correct (and incomplete, the whole thing's too large).  the first ones are results of an incorrect algorithm (but still cool to look at :) )
+
 console.log(data);
 
 let tail = [0, 0];
