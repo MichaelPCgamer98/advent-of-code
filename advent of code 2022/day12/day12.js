@@ -10,6 +10,8 @@ let data = syncReadFile("day12/data.txt");
 
 console.log(data);
 
+//THIS IS JUST THE STARTER, I'LL CONTINUE TOMORROW I HAVE TO DO SOMETHING ELSE TONIGHT
+
 let grid = [];
 let goal = [];
 let start = [];
