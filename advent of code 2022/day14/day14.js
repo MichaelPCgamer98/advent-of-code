@@ -132,14 +132,18 @@ while (true) {
     }
 
 
-    if (cave[sandY + 1][sandX] === 'o') {
+    if ((new Set(['#', 'o']).has(cave[sandY + 1][sandX]))) {
       explanation += "we hit o, ";
       numZeros++;
-      if (cave[sandY + 1][sandX - 1] === '.' && cave[sandY][sandX - 1] === '.') {
+      if (cave[sandY + 1][sandX - 1] === '~') {
+        sandVoid = true;
+        break;
+      }
+      if (cave[sandY + 1][sandX - 1] === '.' && cave[sandY + 1][sandX - 1] !== '~') {
         explanation += "going left of o, ";
         sandY++;
         sandX--;
-      } else if (cave[sandY + 1][sandX + 1] === '.' && cave[sandY][sandX + 1] === '.') {
+      } else if (cave[sandY + 1][sandX + 1] === '.' && cave[sandY + 1][sandX + 1] !== '~') {
         explanation += "going right of o, ";
         sandY++;
         sandX++;
@@ -169,9 +173,23 @@ while (true) {
     // })
 
     if (cave[sandY + 1][sandX] === '#') {
+      if (cave[sandY + 1][sandX - 1] === '.' && cave[sandY + 1][sandX - 1] !== '~') {
+        explanation += "going left of o, ";
+        sandY++;
+        sandX--;
+      } else if (cave[sandY + 1][sandX + 1] === '.' && cave[sandY + 1][sandX + 1] !== '~') {
+        explanation += "going right of o, ";
+        sandY++;
+        sandX++;
+      } else if (cave[sandY + 1][sandX - 1] === '~' && cave[sandY][sandX - 1] === '.') {
+        sandVoid = true;
+        break;
+      } else if (cave[sandY + 1][sandX + 1] === '~' && cave[sandY][sandX + 1] === '.') {
+        sandVoid = true;
+        break;
+      } else break;
       console.log(sandY, sandX);
       explanation += "we hit #, done";
-      break;
     }
 
     if (new Set(['-', '~']).has(cave[sandY + 1][sandX])) {
@@ -190,7 +208,7 @@ while (true) {
   fs.appendFileSync('day14/complete cave.txt', lilStep + " " + explanation + "\r\n\r\n", err => {
     if (err) console.error(err);
   })
-  if (curr === 50) break;
+  if (curr === 100) break;
   // console.log(sandY);
 }
 
