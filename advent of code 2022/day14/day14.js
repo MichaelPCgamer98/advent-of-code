@@ -89,13 +89,12 @@ for (let rockRoute of rockRoutes) {
 for (let i = furthestLeft - 2; i <= furthestRight + 2; i++) {
   cave[furthestDown + 2][i - furthestLeft + 3] = '-';
 }
-let curr = 0;
 
 fs.truncateSync('day14/complete cave.txt', 0, err => {
   if (err) console.error(err);
 });
 
-let lilStep = 0;
+let ans = 0;
 
 while (true) {
   let sandY = 0;
@@ -128,7 +127,6 @@ while (true) {
       // fs.appendFileSync('day14/complete cave.txt', lilStep + " " + explanation + "\r\n\r\n", err => {
       //   if (err) console.error(err);
       // });
-      lilStep++;
     }
 
 
@@ -136,6 +134,10 @@ while (true) {
       explanation += "we hit o, ";
       numZeros++;
       if (cave[sandY + 1][sandX - 1] === '~') {
+        sandVoid = true;
+        break;
+      }
+      if (cave[sandY + 1][sandX + 1] === '~') {
         sandVoid = true;
         break;
       }
@@ -188,7 +190,7 @@ while (true) {
         sandVoid = true;
         break;
       } else break;
-      console.log(sandY, sandX);
+      // console.log(sandY, sandX);
       explanation += "we hit #, done";
     }
 
@@ -198,49 +200,33 @@ while (true) {
     }
   }
   cave[sandY][sandX] = sandVoid ? '~' : 'o';
-  curr++;
+  if (!sandVoid) ans++;
 
-  for (let c of cave) {
-    fs.appendFileSync('day14/complete cave.txt', c.join("") + "\r\n", err => {
-      if (err) console.error(err);
-    })
-  }
-  fs.appendFileSync('day14/complete cave.txt', lilStep + " " + explanation + "\r\n\r\n", err => {
-    if (err) console.error(err);
-  })
-  if (curr === 100) break;
+  // for (let c of cave) {
+  //   fs.appendFileSync('day14/complete cave.txt', c.join("") + "\r\n", err => {
+  //     if (err) console.error(err);
+  //   })
+  // }
+  // fs.appendFileSync('day14/complete cave.txt', lilStep + " " + explanation + "\r\n\r\n", err => {
+  //   if (err) console.error(err);
+  // })
+  // if (curr === 100) break;
   // console.log(sandY);
 }
 
+console.log(ans);
+
 // new Set(['-', '~']).has(cave[sandY+1][sandX])
 
-// fs.truncate('day14/complete cave.txt', 0, err => {
+// fs.truncateSync('day14/complete cave.txt', 0, err => {
 //   if (err) console.error(err);
 //   else {
-//     for (let c of cave) {
-//       fs.appendFileSync('day14/complete cave.txt', c.join("") + "\r\n", err => {
-//         if (err) console.error(err);
-//       })
-//     }
+for (let c of cave) {
+  fs.appendFileSync('day14/complete cave.txt', c.join("") + "\r\n", err => {
+    if (err) console.error(err);
+  })
+}
 //   }
 // })
 
-
-// fs.truncate('day14/complete cave.txt', 0, err => {
-//   if (err) {
-//     console.error(err);
-//   } else {
-//     for (let i = 0; i < cave.length; i++) {
-//       for (let j = 0; j < cave[i].length; j++) {
-//         fs.appendFileSync('day14/complete cave.txt', cave[i][j], err => {
-//           if (err) {
-//             console.error(err);
-//           }
-//         });
-//       }
-//       fs.appendFileSync('day14/complete cave.txt', "\r\n", err => {
-//         if (err) console.error(err);
-//       })
-//     }
-//   }
-// });
+// 1276 is too high!, 
