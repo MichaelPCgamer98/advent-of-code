@@ -95,11 +95,14 @@ fs.truncateSync('day14/complete cave.txt', 0, err => {
   if (err) console.error(err);
 });
 
+let lilStep = 0;
+
 while (true) {
   let sandY = 0;
   let sandX = 500 - furthestLeft + 3;
   let sandVoid = false;
   let explanation = "";
+  let numZeros = 0;
   if (cave[sandY + 1][sandX] === '~') { //if the very first thing a new piece of sand hits is '~', we're done :)
     console.log("happened");
     break;
@@ -115,21 +118,23 @@ while (true) {
       explanation += "we hit ., continuing ";
       sandY++;
 
-      cave[sandY][sandX] = 'g';
-      for (let c of cave) {
-        fs.appendFileSync('day14/complete cave.txt', c.join("") + "\r\n", err => {
-          if (err) console.error(err);
-        })
-      }
-      cave[sandY][sandX] = '.';
-      fs.appendFileSync('day14/complete cave.txt', "\r\n " + explanation + "\r\n", err => {
-        if (err) console.error(err);
-      })
+      // cave[sandY][sandX] = 'g';
+      // for (let c of cave) {
+      //   fs.appendFileSync('day14/complete cave.txt', c.join("") + "\r\n", err => {
+      //     if (err) console.error(err);
+      //   })
+      // }
+      // cave[sandY][sandX] = '.';
+      // fs.appendFileSync('day14/complete cave.txt', lilStep + " " + explanation + "\r\n\r\n", err => {
+      //   if (err) console.error(err);
+      // });
+      lilStep++;
     }
 
 
     if (cave[sandY + 1][sandX] === 'o') {
       explanation += "we hit o, ";
+      numZeros++;
       if (cave[sandY + 1][sandX - 1] === '.' && cave[sandY][sandX - 1] === '.') {
         explanation += "going left of o, ";
         sandY++;
@@ -141,19 +146,30 @@ while (true) {
       } else {
         break;
       }
-      cave[sandY][sandX] = 'g';
-      for (let c of cave) {
-        fs.appendFileSync('day14/complete cave.txt', c.join("") + "\r\n", err => {
-          if (err) console.error(err);
-        })
-      }
-      cave[sandY][sandX] = '.';
-      fs.appendFileSync('day14/complete cave.txt', "\r\n " + explanation + "\r\n", err => {
-        if (err) console.error(err);
-      })
+      // cave[sandY][sandX] = 'g';
+      // for (let c of cave) {
+      //   fs.appendFileSync('day14/complete cave.txt', c.join("") + "\r\n", err => {
+      //     if (err) console.error(err);
+      //   })
+      // }
+      // cave[sandY][sandX] = '.';
+      // fs.appendFileSync('day14/complete cave.txt', lilStep + " " + explanation + "\r\n\r\n", err => {
+      //   if (err) console.error(err);
+      // })
     }
+    // cave[sandY][sandX] = 'g';
+    // for (let c of cave) {
+    //   fs.appendFileSync('day14/complete cave.txt', c.join("") + "\r\n", err => {
+    //     if (err) console.error(err);
+    //   })
+    // }
+    // cave[sandY][sandX] = '.';
+    // fs.appendFileSync('day14/complete cave.txt', lilStep + " " + explanation + "num zeros hit = " + numZeros + "\r\n\r\n", err => {
+    //   if (err) console.error(err);
+    // })
 
     if (cave[sandY + 1][sandX] === '#') {
+      console.log(sandY, sandX);
       explanation += "we hit #, done";
       break;
     }
@@ -162,9 +178,6 @@ while (true) {
       sandVoid = true;
       break;
     }
-    sandY++;
-
-
   }
   cave[sandY][sandX] = sandVoid ? '~' : 'o';
   curr++;
@@ -174,10 +187,10 @@ while (true) {
       if (err) console.error(err);
     })
   }
-  fs.appendFileSync('day14/complete cave.txt', "\r\n" + explanation + "\r\n\r\n", err => {
+  fs.appendFileSync('day14/complete cave.txt', lilStep + " " + explanation + "\r\n\r\n", err => {
     if (err) console.error(err);
   })
-  if (curr === 6) break;
+  if (curr === 50) break;
   // console.log(sandY);
 }
 
