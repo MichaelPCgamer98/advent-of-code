@@ -37,6 +37,13 @@ for (let rockRoute of rockRoutes) {
     furthestDown = Math.max(furthestDown, point[1]);
   }
 }
+// for PT 2, calculate the furthestDown, then calculate what furthestLeft and furthestRight should be
+furthestDown--;
+for (let i = 0; i <= furthestDown; i++) {
+  furthestLeft--;
+  furthestRight++;
+}
+
 
 console.log(furthestLeft, furthestRight, furthestUp, furthestDown);
 
@@ -87,7 +94,7 @@ for (let rockRoute of rockRoutes) {
 
 // making 1 large line below all rocks, so if a piece of sand hit it, we know we can stop
 for (let i = furthestLeft - 2; i <= furthestRight + 2; i++) {
-  cave[furthestDown + 2][i - furthestLeft + 3] = '-';
+  cave[furthestDown + 3][i - furthestLeft + 3] = '#'; //PT1 was '-'
 }
 
 fs.truncateSync('day14/complete cave.txt', 0, err => {
@@ -102,10 +109,14 @@ while (true) {
   let sandVoid = false;
   let explanation = "";
   let numZeros = 0;
-  if (cave[sandY + 1][sandX] === '~') { //if the very first thing a new piece of sand hits is '~', we're done :)
-    console.log("happened");
-    break;
-  }
+  // if (cave[sandY + 1][sandX] === 'o') { //if the very first thing a new piece of sand hits is '~', we're done :) PT1
+  //   // console.log("happened"); //PT1
+  //   // break;
+  //   //PT2... 
+
+  // }
+  if (cave[sandY][sandX] === 'o') break;
+  // if (cave[sandY + 1][sandX] === 'o') break;
   while (true) {
     //there are 2 stages to falling:
     //  freefall downwards until we hit either '-' (end), '~' (end), 'o' (sand, which we will navigate), and '#' (stop)
@@ -199,7 +210,8 @@ while (true) {
       break;
     }
   }
-  cave[sandY][sandX] = sandVoid ? '~' : 'o';
+  cave[sandY][sandX] = sandVoid ? '~' : 'o'; //PT1
+  // cave[sandX][sandY] = 'o';
   if (!sandVoid) ans++;
 
   // for (let c of cave) {
@@ -229,4 +241,5 @@ for (let c of cave) {
 //   }
 // })
 
-// 1276 is too high!, 
+// PT1 1276 is too high!, 698 is correct!
+// PT2 27917 is too low!, 28247 is too low!...  28248 is too low!... 28594 is correct!
